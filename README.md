@@ -1,4 +1,4 @@
-# Iss.Workflow
+# Workflow
 
 Shared workflow/approval building block for .NET 10 modules. Code-first and generic: no JSON, no configuration tables.
 
@@ -9,10 +9,10 @@ Shared workflow/approval building block for .NET 10 modules. Code-first and gene
 - **Logic on status change** (data updates, emails): hooks in the module's service.
 
 ```
-src/Iss.Workflow                      core, no dependencies
-src/Iss.Workflow.EntityFrameworkCore  history store using the existing DbContext
-samples/Iss.Workflow.Samples          RTS (sequential + parallel + RFI) and Permit (4 levels)
-tests/Iss.Workflow.Tests              xUnit, 47 tests
+src/Workflow                      core, no dependencies
+src/Workflow.EntityFrameworkCore  history store using the existing DbContext
+samples/Workflow.Samples          RTS (sequential + parallel + RFI) and Permit (4 levels)
+tests/Workflow.Tests              xUnit, 47 tests
 ```
 
 ---
@@ -143,14 +143,14 @@ Pick the variant in the service's `GetWorkflow(entity)`.
 
 ---
 
-## Wiring into ISS
+## Application integration
 
 ```csharp
 // OnModelCreating
 modelBuilder.ApplyConfiguration(new WorkflowHistoryEntryConfiguration());   // or map to an existing audit table
 
 // Program.cs
-services.AddScoped<IWorkflowHistoryStore>(sp => new EfWorkflowHistoryStore(sp.GetRequiredService<IssDbContext>()));
+services.AddScoped<IWorkflowHistoryStore>(sp => new EfWorkflowHistoryStore(sp.GetRequiredService<AppDbContext>()));
 services.AddScoped<WorkflowEngine>();
 services.AddScoped<RtsService>();
 
@@ -178,4 +178,4 @@ Every action calls `MarkWorkflowChanged()` (even when the status does not change
 ## Test status
 
 - Core, samples and the 47 tests build and pass on .NET 10.0.114 (plus 2 mutation checks: deliberately breaking priority ordering and round reset makes the tests fail).
-- The build environment had no NuGet access, so the tests ran through a minimal xUnit shim, and **the `Iss.Workflow.EntityFrameworkCore` project was not compiled**. Run `dotnet test` once in the ISS repo to confirm the package versions (`Microsoft.EntityFrameworkCore.Relational`, `xunit`, `xunit.runner.visualstudio`, `Microsoft.NET.Test.Sdk`) match your solution.
+- The build environment had no NuGet access, so the tests ran through a minimal xUnit shim, and **the `Workflow.EntityFrameworkCore` project was not compiled**. Run `dotnet test` once in your application repository to confirm the package versions (`Microsoft.EntityFrameworkCore.Relational`, `xunit`, `xunit.runner.visualstudio`, `Microsoft.NET.Test.Sdk`) match your solution.

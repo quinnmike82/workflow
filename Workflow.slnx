@@ -1,0 +1,12 @@
+<Solution>
+  <Folder Name="/samples/">
+    <Project Path="samples/Workflow.Samples/Workflow.Samples.csproj" />
+  </Folder>
+  <Folder Name="/src/">
+    <Project Path="src/Workflow.EntityFrameworkCore/Workflow.EntityFrameworkCore.csproj" />
+    <Project Path="src/Workflow/Workflow.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Workflow.Tests/Workflow.Tests.csproj" />
+  </Folder>
+</Solution>
