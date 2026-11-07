@@ -1,0 +1,25 @@
+# .NET build output
+**/bin/
+**/obj/
+TestResults/
+*.trx
+*.coverage
+*.coveragexml
+
+# IDE and user settings
+.vs/
+.idea/
+*.user
+*.suo
+*.sln.docstates
+
+# Local secrets
+.env
+.env.*
+!.env.example
+*.pfx
+*.p12
+
+# OS files
+.DS_Store
+Thumbs.db
